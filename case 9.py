@@ -1,31 +1,46 @@
-n = int(input("Enter number of participants: "))
+
+n = int(input("Enter number of transactions: "))
+
+withdrawals = 0
 
 for i in range(n):
-    name = input("Enter participant name: ").lower()
-    fee = float(input("Enter registration fee: "))
 
-    if name in participants:
-        print("Duplicate Registration!")
+    print("\n1. Deposit")
+    print("2. Withdrawal")
+    print("3. Transfer")
+
+    choice = int(input("Enter your choice: "))
+    amount = float(input("Enter amount: "))
+
+    if amount <= 0:
+        print("Invalid Amount")
+
+    elif choice == 1:
+        balance += amount
+        withdrawals = 0
+        print("Deposit Successful")
+
+    elif choice == 2 or choice == 3:
+
+        if amount > balance:
+            print("Insufficient Balance")
+        else:
+            balance -= amount
+
+            if choice == 2:
+                withdrawals += 1
+                print("Withdrawal Successful")
+            else:
+                withdrawals = 0
+                print("Transfer Successful")
+
     else:
-        participants.append(name)
-        total_fees += fee
+        print("Invalid Choice")
 
-sponsorship = float(input("Enter sponsorship amount: "))
-expenses = float(input("Enter total expenses: "))
+    if withdrawals >= 3:
+        print("Warning: Suspicious Repeated Withdrawals!")
 
-total_income = total_fees + sponsorship
-balance = total_income - expenses
+    print("Current Balance:", balance)
 
-print("\nFestival Financial Report")
-
-print("Total Participants:", len(participants))
-print("Total Registration Fees:", total_fees)
-print("Sponsorship Amount:", sponsorship)
-print("Total Income:", total_income)
-print("Total Expenses:", expenses)
-print("Final Balance:", balance)
-
-if balance >= 0:
-    print("Financial Status: Profit")
-else:
-    print("Financial Status: Loss")
+print("\nFinal Account Balance:", balance)
+print("ATM Audit Completed")
